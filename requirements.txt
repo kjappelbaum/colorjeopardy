@@ -1,0 +1,6 @@
+dash
+numpy
+pandas
+SQLAlchemy
+gunicorn
+dash-table
