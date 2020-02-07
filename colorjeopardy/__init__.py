@@ -1,42 +1,52 @@
-# -*- coding: utf-8 -*-
 import dash
+import dash_daq as daq
 import dash_html_components as html
-import dash_core_components as dcc
 
-app_prefix = ''
+external_stylesheets = ['assets/bootstrap.min.css', 'assets/style.css']
 
-app = dash.Dash(
-    __name__,
-    url_base_pathname=app_prefix + '/',
-    assets_url_path=app_prefix + '/assets',
-    meta_tags=[
-        {
-            'charset': 'utf-8',
-        },
-        {
-            'http-equiv': 'X-UA-Compatible',
-            'content': 'IE=edge'
-        },
-        # needed for iframe resizer
-        {
-            'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1'
-        },
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div(
+    [
+        html.Div([
+            html.Div([
+            html.H1('What is this color?', className='display-3'),
+            html.P('Help our research by selecting the color on using the color picker.', className='lead'),
+            daq.ColorPicker(
+                id='color-picker',
+                value=dict(hex='#119DFF'),
+                theme={'dark': True},
+                size=320,
+                style={'border':'opx solid', 'border-radius': 0, 'outline': 0, 'box-shadow': None, 'text-align': 'center'}
+            ),
+             html.Div(id='color-picker-output'),
+             html.Div([
+                             html.P('Click on next to save and get the next color.', className='lead')
+            ],  className='container'),
+             html.Button('Next', id='button', className='btn btn-primary btn-lg btn-block')
+             ], className='container', id='main',),
+
+    ],className='jumbotron'),
+        html.Div([
+        html.Div([
+            html.H2('About'),
+            html.P('We will use this data to turn text descriptions of colors, that we often find in chemistry, into actual numbers.'),
+            html.P('If you want to learn more, feel free to contact Kevin.'),
+            html.H2('Privacy'),
+            html.P('We will store no personal data that can identify you.')
+            ],className='container'),
+    html.Hr(),
+    html.Footer('© Laboratory of Molecular Simulation (LSMO), École polytechnique fédérale de Lausanne (EPFL)')
+     ], className='container' ),
     ])
-server = app.server
-app.config.suppress_callback_exceptions = True
-app.scripts.config.serve_locally = True
-app.css.config.serve_locally = True
 
-title = 'colorjeopardy: What is the color?'
 
-app.title = title
-app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
-    #html.Link(rel='stylesheet', href='/static/style.css'),
-    #html.Link(rel='stylesheet', href='/static/upload.css'),
-    html.Div(id='page-content'),
-    ## work around plot.ly dash design flaw
-    ## https://community.plot.ly/t/display-tables-in-dash/4707/40
-    #html.Div(dt.DataTable(rows=[{}]), style={'display': 'none'})
-])
+@app.callback(
+    dash.dependencies.Output('main', 'style'),
+    [dash.dependencies.Input('color-picker', 'value')])
+def update_output(value):
+    return {'color': value['hex']}
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
