@@ -77,6 +77,8 @@ COLOR = random.choice(COLORS)
 r = lambda: random.randint(0,255)
 RAND_COLOR = '#%02X%02X%02X' % (r(),r(),r())
 STARTTIME = dt.datetime.now()
+COUNTER = 0 
+COUNTER_MAX = 5
 
 def init_color():
     global COLOR
@@ -96,19 +98,18 @@ app.layout = html.Div(
             html.P(
                 'Help our research by selecting the color that most resembles the word using the color picker.'
                 , className='lead'),
-            html.Div([
             daq.ColorPicker(
                 id='color-picker',
                 value=dict(hex=RAND_COLOR),
                 size=620,
                 theme={'dark': True, 'detail': None, 'secondary': None},
-                style={'border':'0px solid', 'borderRadius': 0,  'outline': 0, 'boxShadow': None, 'textAlign': 'Center', 'marginBottom': 20, 'width': '100%'}
-            )], style={'textAlign': 'center'}, className='container'),
+                style={'border':'0px solid', 'borderRadius': 0,  'outline': 0, 'boxShadow': None, 'textAlign': 'Center', 'marginBottom': 20, 'width': '100%', 'display': 'inline-block'}
+            ),
              html.Div(id='color-picker-output'),
              html.Div([
             html.P("Click on 'Next' to save and get the next color.", className='lead')
             ],  className='container'),
-             html.Button('Next', id='next', className='btn btn-primary btn-lg btn-block'),
+             html.Button('Next ({}/{})'.format(COUNTER, COUNTER_MAX), id='next', className='btn btn-primary btn-lg btn-block'),
              html.Div(id='button-out', style={'display': 'none'}),
              html.P(),
              html.Button('Skip', id='skip', className='btn btn-secondary btn-lg btn-block'),
@@ -150,6 +151,13 @@ def color_picker(color):
 def color_picker(color):
     return dict(hex=RAND_COLOR)
 
+@app.callback(
+    dash.dependencies.Output("next", "children"), 
+    [dash.dependencies.Input("button-out", "children")]
+)
+def color_picker(color):
+    return 'Next ({}/{})'.format(COUNTER, COUNTER_MAX)
+
 
 
 @app.callback(
@@ -176,6 +184,8 @@ def entry_to_db(submit_entry, skip, color):
         ]
         insert_entry = connection.execute(db.insert(SQL_table), entry)
         init_color()
+        global COUNTER
+        COUNTER += 1
         return hexcolor
     if skip:
         app.logger.info('Skipping')
