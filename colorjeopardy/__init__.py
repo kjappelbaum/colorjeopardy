@@ -52,7 +52,7 @@ disk_engine = db.create_engine(
 )
 
 
-external_stylesheets = ['assets/bootstrap.min.css', 'assets/style.css']
+external_stylesheets = ['./assets/bootstrap.min.css', './assets/style.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
