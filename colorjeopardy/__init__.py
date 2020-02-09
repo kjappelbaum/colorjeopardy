@@ -77,7 +77,7 @@ COLOR = random.choice(COLORS)
 r = lambda: random.randint(0,255)
 RAND_COLOR = '#%02X%02X%02X' % (r(),r(),r())
 STARTTIME = dt.datetime.now()
-COUNTER = 0 
+COUNTER = 0
 COUNTER_MAX = 5
 
 def init_color():
@@ -98,6 +98,7 @@ app.layout = html.Div(
             html.P(
                 'Help our research by selecting the color that most resembles the word using the color picker.'
                 , className='lead'),
+            html.P('Use the top slider to select the color and bottom slider to select transparency and pointer for detailed selection', className='lead'),
             daq.ColorPicker(
                 id='color-picker',
                 value=dict(hex=RAND_COLOR),
@@ -186,6 +187,8 @@ def entry_to_db(submit_entry, skip, color):
         init_color()
         global COUNTER
         COUNTER += 1
+        
+        # Forward to thank you when COUNTER == MAX_COUNTER
         return hexcolor
     if skip:
         app.logger.info('Skipping')
