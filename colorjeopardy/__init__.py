@@ -71,7 +71,7 @@ SQL_table = db.Table(
 server = app.server
 
 app.config.suppress_callback_exceptions = False
-
+app.title = 'colorjeopardy'
 
 COLOR = random.choice(COLORS)
 r = lambda: random.randint(0,255)
@@ -103,10 +103,10 @@ app.layout = html.Div(
                 size=620,
                 theme={'dark': True, 'detail': None, 'secondary': None},
                 style={'border':'0px solid', 'borderRadius': 0,  'outline': 0, 'boxShadow': None, 'textAlign': 'Center', 'marginBottom': 20, 'width': '100%'}
-            )], style={'textAlign': 'center'}),
+            )], style={'textAlign': 'center'}, className='container'),
              html.Div(id='color-picker-output'),
              html.Div([
-            html.P('Click on next to save and get the next color.', className='lead')
+            html.P("Click on 'Next' to save and get the next color.", className='lead')
             ],  className='container'),
              html.Button('Next', id='next', className='btn btn-primary btn-lg btn-block'),
              html.Div(id='button-out', style={'display': 'none'}),
@@ -123,7 +123,10 @@ app.layout = html.Div(
             html.P(
                 html.Div(['If you want to learn more, feel free to contact ', html.A('Kevin', href='mailto:kevin.jablonka@epfl.ch'), '.']
             )), 
-            html.P('We will make this dataset available in curated form under creative commons license.'),
+            html.P(
+                html.Div([
+                'We commit to relase this dataset in curated form under .', html.A('CC BY-SA 4.0 license', href='https://creativecommons.org/licenses/by-sa/4.0/')
+                ])),
             html.H2('Privacy'),
             html.P('We will store no personal data that can identify you.')
             ],className='container'),
