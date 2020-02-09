@@ -125,7 +125,7 @@ app.layout = html.Div(
             )), 
             html.P(
                 html.Div([
-                'We commit to relase this dataset in curated form under .', html.A('CC BY-SA 4.0 license', href='https://creativecommons.org/licenses/by-sa/4.0/')
+                'We commit to relase this dataset in curated form under ', html.A('CC BY-SA 4.0 license', href='https://creativecommons.org/licenses/by-sa/4.0/'), '.'
                 ])),
             html.H2('Privacy'),
             html.P('We will store no personal data that can identify you.')
