@@ -63,6 +63,7 @@ SQL_table = db.Table(
     metadata,
     db.Column("color_string", db.String(255)),
     db.Column("hex", db.String(255)),
+    db.Column("starttime", db.DATETIME),
     db.Column("time_stamp", db.DATETIME, primary_key=True),
 )
 
@@ -75,42 +76,53 @@ app.config.suppress_callback_exceptions = False
 COLOR = random.choice(COLORS)
 r = lambda: random.randint(0,255)
 RAND_COLOR = '#%02X%02X%02X' % (r(),r(),r())
+STARTTIME = dt.datetime.now()
 
 def init_color():
     global COLOR
     global RAND_COLOR
+    global STARTTIME
     COLOR = random.choice(COLORS)
     r = lambda: random.randint(0,255)
     RAND_COLOR = '#%02X%02X%02X' % (r(),r(),r())
+    STARTTIME =  dt.datetime.now()
 
-
+link = 'Kevin'
 app.layout = html.Div(
     [
         html.Div([
             html.Div([
-            html.H1('Please pick this color: {}'.format(COLOR), className='display-3'),
-            html.P('Help our research by selecting the color the most resembles the word using the color picker.', className='lead'),
+            html.H1('Please pick this color: {}'.format(COLOR), className='display-3', id='h1'),
+            html.P(
+                'Help our research by selecting the color that most resembles the word using the color picker.'
+                , className='lead'),
+            html.Div([
             daq.ColorPicker(
                 id='color-picker',
                 value=dict(hex=RAND_COLOR),
-                theme={'dark': True},
-                size=690,
-                style={'border':'0px solid', 'border-radius': 0, 'outline': 0, 'box-shadow': None, 'text-align': 'center', 'margin-bottom': 20}
-            ),
+                size=620,
+                theme={'dark': True, 'detail': None, 'secondary': None},
+                style={'border':'0px solid', 'borderRadius': 0,  'outline': 0, 'boxShadow': None, 'textAlign': 'Center', 'marginBottom': 20, 'width': '100%'}
+            )], style={'textAlign': 'center'}),
              html.Div(id='color-picker-output'),
              html.Div([
             html.P('Click on next to save and get the next color.', className='lead')
             ],  className='container'),
              html.Button('Next', id='next', className='btn btn-primary btn-lg btn-block'),
-             html.Div(id='button-out')
+             html.Div(id='button-out', style={'display': 'none'}),
+             html.P(),
+             html.Button('Skip', id='skip', className='btn btn-secondary btn-lg btn-block'),
              ], className='container', id='main'),
+             html.Div(id='skip-button-out', style={'display': 'none'}),
 
     ],className='jumbotron'),
         html.Div([
         html.Div([
             html.H2('About'),
             html.P('We will use this data to turn text descriptions of colors, that we often find in chemistry, into actual numbers. This will help us in building models that can predict the color of chemical compounds.'),
-            html.P('If you want to learn more, feel free to contact Kevin.'),
+            html.P(
+                html.Div(['If you want to learn more, feel free to contact ', html.A('Kevin', href='mailto:kevin.jablonka@epfl.ch'), '.']
+            )), 
             html.P('We will make this dataset available in curated form under creative commons license.'),
             html.H2('Privacy'),
             html.P('We will store no personal data that can identify you.')
@@ -119,6 +131,13 @@ app.layout = html.Div(
     html.Footer('© Laboratory of Molecular Simulation (LSMO), École polytechnique fédérale de Lausanne (EPFL)')
      ], className='container' ),
     ])
+
+@app.callback(
+    dash.dependencies.Output("h1", "children"), 
+    [dash.dependencies.Input("button-out", "children")]
+)
+def color_picker(color):
+    return 'Please pick this color: {}'.format(COLOR)
 
 
 @app.callback(
@@ -129,26 +148,37 @@ def color_picker(color):
     return dict(hex=RAND_COLOR)
 
 
+
 @app.callback(
     dash.dependencies.Output("button-out", 'children'),
-    [dash.dependencies.Input("next", "n_clicks")],
+    [dash.dependencies.Input("next", "n_clicks"), dash.dependencies.Input('skip', 'n_clicks')],
     [
         dash.dependencies.State("color-picker", "value"),
     ],
 )
-def entry_to_db(submit_entry, color):
+def entry_to_db(submit_entry, skip, color):
     hexcolor = color['hex']
     if submit_entry:
+        time_stamp = dt.datetime.now()
+        app.logger.info('Logging to db. Color string: {}, hex: {}, starttime: {}. time_stamp: {}'.format(
+                        COLOR, hexcolor, STARTTIME, time_stamp)
+                        )
         entry = [
             {
                 "color_string": COLOR,
                 "hex": hexcolor,
-                "time_stamp": dt.datetime.now(),
+                "starttime": STARTTIME,
+                "time_stamp": time_stamp,
             }
         ]
         insert_entry = connection.execute(db.insert(SQL_table), entry)
         init_color()
-        return color
+        return hexcolor
+    if skip:
+        app.logger.info('Skipping')
+        init_color()
+        hexcolor = color['hex']
+        return hexcolor
         
     raise dash.exceptions.PreventUpdate
 

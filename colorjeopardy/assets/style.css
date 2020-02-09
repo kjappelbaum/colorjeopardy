@@ -1,7 +1,19 @@
 .chrome-picker {
-    outline: 0;
-    border: 0;
-    border-radius: 0;
-    box-shadow:  none;
-    text-align: center;
+    outline: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: center !important;
+}
+
+.chrome-picker input {
+    box-shadow: none !important;
+}
+
+#color-picker {
+    outline: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: center !important;
 }
