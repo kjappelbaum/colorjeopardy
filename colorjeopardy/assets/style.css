@@ -114,3 +114,13 @@
 #color-picker>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(1) {
     margin-top: 8px;
 }
+
+#color-picker>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+#color-picker > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div{
+    margin-left: 6px !important;
+    margin-top: 6px !important;
+}
