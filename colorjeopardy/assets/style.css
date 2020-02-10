@@ -49,35 +49,33 @@
 
 @media only screen and (min-width : 768px) {
     #color-picker {
-        size: 750px !important;
-        width: 750px !important;
+        size: 720px !important;
+        width: 720px !important;
     }
 
     #color-picker>div {
-        size: 750px !important;
-        width: 750px !important;
+        size: 720px !important;
+        width: 720px !important;
     }
 
-
     .chrome-picker {
-        width: 750px !important;
+        width: 720px !important;
     }
 }
 
 @media only screen and (min-width : 992px) {
     #color-picker {
-        size: 970px !important;
-        width: 970px !important;
+        size: 950px !important;
+        width: 950px !important;
     }
 
     #color-picker>div {
-        size: 970px !important;
-        width: 970px !important;
+        size: 950px !important;
+        width: 950px !important;
     }
 
-
     .chrome-picker {
-        width: 970px !important;
+        width: 950px !important;
     }
 }
 
