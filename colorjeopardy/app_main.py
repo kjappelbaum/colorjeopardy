@@ -13,7 +13,8 @@ COUNTER_MAX = 5
 
 
 disk_engine = db.create_engine(
-    "postgres://wrjrddoanrkvqp:f7ba4eb5ebb13da9634f32d258bcc06f93a55a8e55d4b01041aea04871c366b8@ec2-54-247-125-38.eu-west-1.compute.amazonaws.com:5432/d2inhdasduajbn")
+    "postgres://wrjrddoanrkvqp:f7ba4eb5ebb13da9634f32d258bcc06f93a55a8e55d4b01041aea04871c366b8@ec2-54-247-125-38.eu-west-1.compute.amazonaws.com:5432/d2inhdasduajbn"
+)
 
 
 connection = disk_engine.connect()
@@ -23,8 +24,8 @@ SQL_table = db.Table(
     metadata,
     db.Column("color_string", db.String(255)),
     db.Column("hex", db.String(255)),
-    db.Column("starttime", db.DATETIME),
-    db.Column("time_stamp", db.DATETIME, primary_key=True),
+    db.Column("starttime", db.DateTime()),
+    db.Column("time_stamp", db.DateTime(), primary_key=True),
 )
 
 
