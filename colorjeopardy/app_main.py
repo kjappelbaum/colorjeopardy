@@ -43,13 +43,13 @@ layout = html.Div(
                             className="lead",
                         ),
                         html.P(
-                            "Use the top slider to select the color and bottom slider to select transparency and pointer for detailed selection.",
+                            "Use the slider to select the region in color space and pointer for detailed selection.",
                             className="lead",
                         ),
                         daq.ColorPicker(
                             id="color-picker",
                             # value=dict(hex=session.get(RAND_COLOR)),
-                            size=620,
+                            size=255,
                             theme={"dark": True, "detail": None, "secondary": None},
                             style={
                                 "border": "0px solid",
@@ -58,7 +58,6 @@ layout = html.Div(
                                 "boxShadow": None,
                                 "textAlign": "Center",
                                 "marginBottom": 20,
-                                "width": "100%",
                                 "display": "inline-block",
                             },
                         ),
@@ -119,6 +118,10 @@ layout = html.Div(
                                 ),
                                 ".",
                             ]
+                        ),
+                        html.H3("Technical Details"),
+                        html.P(
+                            "This app was implemented using Dash and Flask. The current progress is saved as cookie."
                         ),
                         html.H2("Privacy"),
                         html.P("We will store no personal data that can identify you."),

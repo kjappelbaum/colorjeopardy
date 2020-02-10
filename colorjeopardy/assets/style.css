@@ -10,11 +10,79 @@
     box-shadow: none !important;
 }
 
-#color-picker {
-    outline: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    text-align: center !important;
-    margin-bottom: 5px !important;
+@media only screen and (min-width : 320px) {
+    #color-picker {
+        size: 255px !important;
+        width: 255px !important;
+    }
+
+    #color-picker>div {
+        size: 255px !important;
+        width: 255px !important;
+    }
+
+    .chrome-picker {
+        width: 255px !important;
+    }
+}
+
+
+@media only screen and (min-width : 480px) {
+    #color-picker {
+        size: 400px !important;
+        width: 400px !important;
+    }
+
+    #color-picker>div {
+        size: 400px !important;
+        width: 400px !important;
+    }
+
+    .chrome-picker {
+        width: 400px !important;
+    }
+}
+
+@media only screen and (min-width : 768px) {
+    #color-picker {
+        size: 620px !important;
+        width: 620px !important;
+    }
+
+    #color-picker>div {
+        size: 620px !important;
+        width: 620px !important;
+    }
+
+
+    .chrome-picker {
+        width: 620px !important;
+    }
+}
+
+
+@media only screen and (min-width : 1200px) {
+    #color-picker {
+        size: 1000px !important;
+        width: 1000px !important;
+    }
+
+    #color-picker>div {
+        size: 1000px !important;
+        width: 1000px !important;
+    }
+
+
+    .chrome-picker {
+        width: 1000px !important;
+    }
+}
+
+
+#color-picker>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2) {
+    display: none;
+}
+
+#color-picker>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(1) {
+    margin-top: 8px;
 }
