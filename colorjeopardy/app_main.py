@@ -121,7 +121,20 @@ layout = html.Div(
                         ),
                         html.H3("Technical Details"),
                         html.P(
-                            ["This app was implemented using " html.A('Dash', href='https://plot.ly/dash/'), ' and ', html.A('Flask', href='https://flask.palletsprojects.com/en/1.1.x/'), ". The current progress is saved as", href.A('session cookie', href='https://allaboutcookies.org/cookies/session-cookies-used-for.html'), " if you experience any issues you might try switching the browser or delete cache and cookies."
+                            [
+                                "This app was implemented using ",
+                                html.A("Dash", href="https://plot.ly/dash/"),
+                                " and ",
+                                html.A(
+                                    "Flask",
+                                    href="https://flask.palletsprojects.com/en/1.1.x/",
+                                ),
+                                ". The current progress is saved as ",
+                                html.A(
+                                    "session cookie",
+                                    href="https://allaboutcookies.org/cookies/session-cookies-used-for.html",
+                                ),
+                                " if you experience any issues you might try switching the browser or delete cache and cookies.",
                             ]
                         ),
                         html.H2("Privacy"),
