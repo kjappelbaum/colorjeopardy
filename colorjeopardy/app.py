@@ -1,4 +1,9 @@
 import dash
+from flask import Flask, session
+from .colors import COLORS
+import random
+import datetime as dt
+
 
 external_stylesheets = ["./assets/bootstrap.min.css", "./assets/style.css"]
 
@@ -13,8 +18,11 @@ app = dash.Dash(
     ],
 )
 
-
 server = app.server
 
 app.config.suppress_callback_exceptions = False
 app.title = "colorjeopardy"
+
+SESSION_TYPE = "redis"
+app.secret_key = b"456ygrtbffgd4w5ygvd"
+

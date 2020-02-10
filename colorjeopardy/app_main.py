@@ -1,178 +1,15 @@
 import dash
 import dash_daq as daq
-from flask import redirect
+from flask import redirect, session
 import dash_core_components as dcc
 import dash_html_components as html
 import sqlalchemy as db
 import random
 import datetime as dt
 from .app import app
+from .colors import COLORS
 
-COLORS = [
-    "pink",
-    "colorless",
-    "reddish brown",
-    "purple",
-    "brown",
-    "red",
-    "blue",
-    "yellow",
-    "green",
-    "black",
-    "violet",
-    "rose",
-    "deep blue",
-    "sky blue",
-    "pale yellow",
-    "dark green",
-    "red brown",
-    "orange",
-    "dark red",
-    "grey",
-    "white",
-    "light blue",
-    "black brown",
-    "pale pink",
-    "slightly pink",
-    "red-brown",
-    "light purple",
-    "green yellow",
-    "dark brown",
-    "primrose yellow",
-    "cyan",
-    "light green",
-    "faint pink",
-    "orange brown",
-    "dark blue",
-    "red/purple",
-    "blue green",
-    "pale brown",
-    "pink/purple",
-    "light yellow",
-    "pale green",
-    "dark turquiose",
-    "yellowish white",
-    "light brown",
-    "pale blue",
-    "dark purple",
-    "yellow-green",
-    "black green",
-    "green-yellow",
-    "flavescens",
-    "light pink",
-    "intense violet",
-    "aubergine",
-    "yellowish yellow",
-    "orange red",
-    "deep-blue",
-    "lilac",
-    "pale violet",
-    "courless",
-    "dark-violet",
-    "gold",
-    "light red",
-    "yellow-orange",
-    "amber",
-    "pale-yellow",
-    "green-black",
-    "buff",
-    "deep yellow",
-    "deep red",
-    "whiteish colorless",
-    "red-violet",
-    "pale red",
-    "lavender",
-    "straw yellow",
-    "yellow green",
-    "brown-red",
-    "purple black",
-    "black purple",
-    "turquoise",
-    "brown orange",
-    "light-purple",
-    "greenish blue",
-    "light violet",
-    "aquamarine",
-    "wheat",
-    "ruby red",
-    "navy blue",
-    "deep purple",
-    "green blue",
-    "plate",
-    "gray",
-    "red-orange",
-    "black-brown",
-    "red purple",
-    "dark pink",
-    "dark purplish-red",
-    "purple-red",
-    "pink-violet",
-    "blackish purple",
-    "reddish purple",
-    "bright yellow",
-    "turquoise blue",
-    "black red",
-    "orange-red",
-    "reddish",
-    "greenish-yellow",
-    "mauve",
-    "orange-yellow",
-    "dark violet",
-    "red-yellow",
-    "yellowish",
-    "translucent",
-    "magenta",
-    "beige",
-    "greenish cyan",
-    "dark orange",
-    "cherry red",
-    "deep blue-black",
-    "light orange",
-    "deep brown",
-    "green-blue",
-    "dark yellow",
-    "crimson",
-    "orange yellow",
-    "white",
-    "claybank",
-    "azure",
-    "glaucous",
-    "greenish green",
-    "deep green",
-    "violet red",
-    "yellow-red",
-    "greenish-blue",
-    "light colorless",
-    "brown yellow",
-    "bluish violet",
-    "golden yellow",
-    "red-black",
-    "intense purple",
-    "peach",
-    "scarlet",
-    "dull dark black",
-    "violet-red",
-    "dark rose",
-    "blue violet",
-    "amaranthine",
-    "jasmine",
-    "light-brown",
-    "purple-blue",
-    "dark-blue",
-    "pink-purple",
-    "pink-red",
-    "light",
-    "purple red",
-    "brown-yellow",
-    "grass green",
-    "jonquil",
-    "yellowish green",
-    "pale straw",
-    "pale purple",
-    "dark-red",
-    "green/brown",
-    "green-brown",
-]
+COUNTER_MAX = 5
 
 
 disk_engine = db.create_engine(
@@ -192,24 +29,6 @@ SQL_table = db.Table(
 )
 
 
-COLOR = random.choice(COLORS)
-r = lambda: random.randint(0, 255)
-RAND_COLOR = "#%02X%02X%02X" % (r(), r(), r())
-STARTTIME = dt.datetime.now()
-COUNTER = 0
-COUNTER_MAX = 5
-
-
-def init_color():
-    global COLOR
-    global RAND_COLOR
-    global STARTTIME
-    COLOR = random.choice(COLORS)
-    r = lambda: random.randint(0, 255)
-    RAND_COLOR = "#%02X%02X%02X" % (r(), r(), r())
-    STARTTIME = dt.datetime.now()
-
-
 layout = html.Div(
     [
         html.Div(
@@ -217,9 +36,7 @@ layout = html.Div(
                 html.Div(
                     [
                         html.H1(
-                            "Please pick this color: {}".format(COLOR),
-                            className="display-3",
-                            id="h1",
+                            "Please pick this color: ", className="display-3", id="h1"
                         ),
                         html.P(
                             "Help our research by selecting the color that most resembles the word using the color picker.",
@@ -231,7 +48,7 @@ layout = html.Div(
                         ),
                         daq.ColorPicker(
                             id="color-picker",
-                            value=dict(hex=RAND_COLOR),
+                            # value=dict(hex=session.get(RAND_COLOR)),
                             size=620,
                             theme={"dark": True, "detail": None, "secondary": None},
                             style={
@@ -256,7 +73,7 @@ layout = html.Div(
                             className="container",
                         ),
                         html.Button(
-                            "Next ({}/{})".format(COUNTER, COUNTER_MAX),
+                            "Next ({}/{})".format(0, COUNTER_MAX),
                             id="next",
                             className="btn btn-primary btn-lg btn-block",
                         ),
@@ -320,6 +137,7 @@ layout = html.Div(
     **{"data-iframe-height": ""},
 )
 
+
 app.layout = layout
 
 
@@ -328,7 +146,7 @@ app.layout = layout
     [dash.dependencies.Input("button-out", "children")],
 )
 def color_picker(color):
-    return "Please pick this color: {}".format(COLOR)
+    return "Please pick this color: {}".format(session.get("COLOR"))
 
 
 @app.callback(
@@ -336,7 +154,7 @@ def color_picker(color):
     [dash.dependencies.Input("button-out", "children")],
 )
 def color_picker(color):
-    return dict(hex=RAND_COLOR)
+    return dict(hex=session.get("RAND_COLOR"))
 
 
 @app.callback(
@@ -344,7 +162,7 @@ def color_picker(color):
     [dash.dependencies.Input("button-out", "children")],
 )
 def color_picker(color):
-    return "Next ({}/{})".format(COUNTER, COUNTER_MAX)
+    return "Next ({}/{})".format(session.get("COUNTER"), COUNTER_MAX)
 
 
 @app.callback(
@@ -361,22 +179,26 @@ def entry_to_db(submit_entry, skip, color):
         time_stamp = dt.datetime.now()
         app.logger.info(
             "Logging to db. Color string: {}, hex: {}, starttime: {}. time_stamp: {}".format(
-                COLOR, hexcolor, STARTTIME, time_stamp
+                session.get("COLOR"), hexcolor, session.get("STARTTIME"), time_stamp
             )
         )
         entry = [
             {
-                "color_string": COLOR,
+                "color_string": session.get("COLOR"),
                 "hex": hexcolor,
-                "starttime": STARTTIME,
+                "starttime": session.get("STARTTIME"),
                 "time_stamp": time_stamp,
             }
         ]
         insert_entry = connection.execute(db.insert(SQL_table), entry)
-        init_color()
-        global COUNTER
-        COUNTER += 1
-        if COUNTER >= COUNTER_MAX:
+        # init color start
+        session["COLOR"] = random.choice(COLORS)
+        r = lambda: random.randint(0, 255)
+        session["RAND_COLOR"] = "#%02X%02X%02X" % (r(), r(), r())
+        session["STARTTIME"] = dt.datetime.now()
+        # init color end
+        session["COUNTER"] += 1
+        if session.get("COUNTER") >= COUNTER_MAX:
             app.logger.info(
                 "Counter equals or exceeds max counter, forwarding to completion page."
             )
@@ -386,7 +208,12 @@ def entry_to_db(submit_entry, skip, color):
         return hexcolor
     if skip:
         app.logger.info("Skipping")
-        init_color()
+        # init color start
+        session["COLOR"] = random.choice(COLORS)
+        r = lambda: random.randint(0, 255)
+        session["RAND_COLOR"] = "#%02X%02X%02X" % (r(), r(), r())
+        session["STARTTIME"] = dt.datetime.now()
+        # init color end
         hexcolor = color["hex"]
         return hexcolor
 
