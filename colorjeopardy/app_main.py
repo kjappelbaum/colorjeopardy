@@ -13,8 +13,7 @@ COUNTER_MAX = 5
 
 
 disk_engine = db.create_engine(
-    "sqlite:///data_entry.db", connect_args={"check_same_thread": False}
-)
+    "postgres://wrjrddoanrkvqp:f7ba4eb5ebb13da9634f32d258bcc06f93a55a8e55d4b01041aea04871c366b8@ec2-54-247-125-38.eu-west-1.compute.amazonaws.com:5432/d2inhdasduajbn")
 
 
 connection = disk_engine.connect()
