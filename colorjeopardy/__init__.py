@@ -21,9 +21,10 @@ app.layout = html.Div(
 def display_page(pathname):
     if pathname == "/":
         return app_main.layout
+    elif pathname == "/complete":
+        return app_complete.layout
     else:
-        return app_main.layoutß
-
+        return app_main.layout
 
 
 if __name__ == "__main__":
