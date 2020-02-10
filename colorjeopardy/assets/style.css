@@ -18,15 +18,18 @@
     #color-picker {
         size: 255px !important;
         width: 255px !important;
+        height: 120px !important;
     }
 
     #color-picker>div {
         size: 255px !important;
         width: 255px !important;
+        height: 120px !important;
     }
 
     .chrome-picker {
         width: 255px !important;
+        height: 120px !important;
     }
 }
 
@@ -35,15 +38,18 @@
     #color-picker {
         size: 500px !important;
         width: 500px !important;
+        height: 120px !important;
     }
 
     #color-picker>div {
         size: 500px !important;
         width: 500px !important;
+        height: 120px !important;
     }
 
     .chrome-picker {
         width: 500px !important;
+        height: 120px !important;
     }
 }
 
@@ -51,15 +57,18 @@
     #color-picker {
         size: 720px !important;
         width: 720px !important;
+        height: 120px !important;
     }
 
     #color-picker>div {
         size: 720px !important;
         width: 720px !important;
+        height: 120px !important;
     }
 
     .chrome-picker {
         width: 720px !important;
+        height: 120px !important;
     }
 }
 
@@ -67,15 +76,18 @@
     #color-picker {
         size: 950px !important;
         width: 950px !important;
+        height: 120px !important;
     }
 
     #color-picker>div {
         size: 950px !important;
         width: 950px !important;
+        height: 120px !important;
     }
 
     .chrome-picker {
         width: 950px !important;
+        height: 120px !important;
     }
 }
 
@@ -84,16 +96,19 @@
     #color-picker {
         size: 1170px !important;
         width: 1170px !important;
+        height: 120px !important;
     }
 
     #color-picker>div {
         size: 1170px !important;
         width: 1170px !important;
+        height: 120px !important;
     }
 
 
     .chrome-picker {
         width: 1170px !important;
+        height: 120px !important;
     }
 }
 
