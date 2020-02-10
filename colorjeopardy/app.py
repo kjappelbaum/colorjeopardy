@@ -1,4 +1,5 @@
 import dash
+
 external_stylesheets = ["./assets/bootstrap.min.css", "./assets/style.css"]
 
 app = dash.Dash(

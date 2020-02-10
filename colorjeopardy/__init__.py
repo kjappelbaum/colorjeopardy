@@ -19,6 +19,7 @@ app.layout = html.Div(
     [dash.dependencies.Input("url", "pathname")],
 )
 def display_page(pathname):
+    app.logger.info("Pathname is {}".format(pathname))
     if pathname == "/":
         return app_main.layout
     elif pathname == "/complete":

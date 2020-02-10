@@ -175,7 +175,6 @@ COLORS = [
 ]
 
 
-
 disk_engine = db.create_engine(
     "sqlite:///data_entry.db", connect_args={"check_same_thread": False}
 )
@@ -209,7 +208,6 @@ def init_color():
     r = lambda: random.randint(0, 255)
     RAND_COLOR = "#%02X%02X%02X" % (r(), r(), r())
     STARTTIME = dt.datetime.now()
-
 
 
 layout = html.Div(
@@ -286,6 +284,9 @@ layout = html.Div(
                             "We will use this data to turn text descriptions of colors, that we often find in chemistry, into actual numbers. This will help us in building models that can predict the color of chemical compounds."
                         ),
                         html.P(
+                            "To avoid any potential biases, we chose the colors randomly and also initalize the color picker randomly."
+                        ),
+                        html.P(
                             [
                                 "If you want to learn more, feel free to contact ",
                                 html.A("Kevin", href="mailto:kevin.jablonka@epfl.ch"),
@@ -320,6 +321,7 @@ layout = html.Div(
 )
 
 app.layout = layout
+
 
 @app.callback(
     dash.dependencies.Output("h1", "children"),
@@ -378,8 +380,9 @@ def entry_to_db(submit_entry, skip, color):
             app.logger.info(
                 "Counter equals or exceeds max counter, forwarding to completion page."
             )
-            redirect("/app_complete")
-        # Forward to thank you when COUNTER == MAX_COUNTER
+            return dcc.Location(
+                pathname="/complete", id="forward_complete"
+            )  # Forward to thank you when COUNTER == MAX_COUNTER
         return hexcolor
     if skip:
         app.logger.info("Skipping")
