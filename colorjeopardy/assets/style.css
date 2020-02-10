@@ -49,36 +49,53 @@
 
 @media only screen and (min-width : 768px) {
     #color-picker {
-        size: 620px !important;
-        width: 620px !important;
+        size: 750px !important;
+        width: 750px !important;
     }
 
     #color-picker>div {
-        size: 620px !important;
-        width: 620px !important;
+        size: 750px !important;
+        width: 750px !important;
     }
 
 
     .chrome-picker {
-        width: 620px !important;
+        width: 750px !important;
+    }
+}
+
+@media only screen and (min-width : 992px) {
+    #color-picker {
+        size: 970px !important;
+        width: 970px !important;
+    }
+
+    #color-picker>div {
+        size: 970px !important;
+        width: 970px !important;
+    }
+
+
+    .chrome-picker {
+        width: 970px !important;
     }
 }
 
 
-@media only screen and (min-width : 1020px) {
+@media only screen and (min-width : 1200px) {
     #color-picker {
-        size: 1000px !important;
-        width: 1000px !important;
+        size: 1170px !important;
+        width: 1170px !important;
     }
 
     #color-picker>div {
-        size: 1000px !important;
-        width: 1000px !important;
+        size: 1170px !important;
+        width: 1170px !important;
     }
 
 
     .chrome-picker {
-        width: 1000px !important;
+        width: 1170px !important;
     }
 }
 
