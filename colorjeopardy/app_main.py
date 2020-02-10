@@ -131,10 +131,10 @@ layout = html.Div(
                                 ),
                                 ". The current progress is saved as ",
                                 html.A(
-                                    "session cookie",
+                                    "session cookie.",
                                     href="https://allaboutcookies.org/cookies/session-cookies-used-for.html",
                                 ),
-                                " if you experience any issues you might try switching the browser or delete cache and cookies.",
+                                " If you experience any issues you might try switching the browser or delete cache and cookies.",
                             ]
                         ),
                         html.H2("Privacy"),
