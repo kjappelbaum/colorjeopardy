@@ -88,7 +88,6 @@ COLORS = [
     "navy blue",
     "deep purple",
     "green blue",
-    "plate",
     "gray",
     "red-orange",
     "black-brown",
