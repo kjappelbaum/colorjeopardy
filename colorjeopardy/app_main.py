@@ -117,6 +117,9 @@ layout = html.Div(
                                     href="https://creativecommons.org/licenses/by-sa/4.0/",
                                 ),
                                 ".",
+                                "A first version is already deposited on Zenodo ", 
+                                html.A(html.Img(src="https://zenodo.org/badge/DOI/10.5281/zenodo.3831845.svg"), href="https://doi.org/10.5281/zenodo.3831845")
+                                "."
                             ]
                         ),
                         html.H3("Technical Details"),
