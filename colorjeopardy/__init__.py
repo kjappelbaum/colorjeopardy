@@ -26,7 +26,7 @@ def display_page(pathname):
     session["RAND_COLOR"] = "#%02X%02X%02X" % (r(), r(), r())
     session["STARTTIME"] = dt.datetime.now()
     session["COUNTER"] = 0
-
+    print("Color is {}".format(session["COLOR"]))
     app.logger.info("Pathname is {}".format(pathname))
     if pathname == "/":
         return app_main.layout

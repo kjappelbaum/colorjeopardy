@@ -1,7 +1,11 @@
-# What's is this color?
+# What is this color?
+
+<p style="text-align: center;">
+<img src="screenshot_colorjeopardy.png" alt="drawing" width="400"/>
+</p>
 
 Often we find a color written down as a string such as 'pale yellow'---but what does this mean?
-This app is our attempt to find this out and to create a mapping between the color string and the actual color (as RGB). The tool records only the color string, the RGB coordinates, and the time it took to pick the color.
+This app is our attempt to find this out and to create a mapping between the color string and the actual color (as RGB). The tool records only the color string, the RGB coordinates, and the time it took to pick the color into a PostgreSQL database.
 
 The results of this survey have been used for a [machine learning approach that attempts to predict the color of MOFs.](https://chemrxiv.org/articles/preprint/A_Data-Driven_Perspective_on_the_Colours_of_Metal-Organic_Frameworks/13033217)
 

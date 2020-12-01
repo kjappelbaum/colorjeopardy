@@ -20,9 +20,8 @@ app = dash.Dash(
 
 server = app.server
 
-app.config.suppress_callback_exceptions = False
+app.config.suppress_callback_exceptions = True
 app.title = "colorjeopardy"
 
-SESSION_TYPE = "redis"
 app.secret_key = b"456ygrtbffgd4w5ygvd"
 

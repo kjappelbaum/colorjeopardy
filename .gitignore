@@ -238,3 +238,5 @@ tags
 .history
 
 # End of https://www.gitignore.io/api/vim,linux,macos,flask,python,visualstudiocode
+
+backup.csv

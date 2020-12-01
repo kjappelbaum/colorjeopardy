@@ -1,6 +1,7 @@
 import dash
+import os
 import dash_daq as daq
-from flask import redirect, session
+from flask import session
 import dash_core_components as dcc
 import dash_html_components as html
 import sqlalchemy as db
@@ -11,10 +12,18 @@ from .colors import COLORS
 
 COUNTER_MAX = 5
 
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///data_entry.db")
 
-disk_engine = db.create_engine(
-    "postgres://wrjrddoanrkvqp:f7ba4eb5ebb13da9634f32d258bcc06f93a55a8e55d4b01041aea04871c366b8@ec2-54-247-125-38.eu-west-1.compute.amazonaws.com:5432/d2inhdasduajbn"
-)
+
+if DATABASE_URL == "sqlite:////tmp/test.db":
+    # local testing
+    disk_engine = db.create_engine(
+        DATABASE_URL, connect_args={'check_same_thread': False}
+    )
+else: 
+    disk_engine = db.create_engine(
+        DATABASE_URL, connect_args={'check_same_thread': False}
+    )
 
 
 connection = disk_engine.connect()
@@ -29,8 +38,15 @@ SQL_table = db.Table(
 )
 
 
-layout = html.Div(
-    [
+import random
+r = lambda: random.randint(0,255)
+
+def color_picker(color):
+    return dict(hex=session.get("RAND_COLOR"))
+
+RANDOM_HEX = '#{:02x}{:02x}{:02x}'.format(r(), r(), r())
+layout =  html.Div(
+    [ 
         html.Div(
             [
                 html.Div(
@@ -48,8 +64,9 @@ layout = html.Div(
                         ),
                         daq.ColorPicker(
                             id="color-picker",
-                            # value=dict(hex=session.get(RAND_COLOR)),
+                            #value=dict(hex=session.get(RAND_COLOR)),
                             size=255,
+                            value=dict(hex=RANDOM_HEX),
                             theme={"dark": True, "detail": None, "secondary": None},
                             style={
                                 "border": "0px solid",
@@ -116,7 +133,7 @@ layout = html.Div(
                                     "CC BY-SA 4.0 license",
                                     href="https://creativecommons.org/licenses/by-sa/4.0/",
                                 ),
-                                ".",
+                                ". ",
                                 "A first version is already deposited on Zenodo ", 
                                 html.A(html.Img(src="https://zenodo.org/badge/DOI/10.5281/zenodo.3831845.svg"), href="https://doi.org/10.5281/zenodo.3831845"),
                                 "."
@@ -157,25 +174,12 @@ layout = html.Div(
     **{"data-iframe-height": ""},
 )
 
-
-app.layout = layout
-
-
 @app.callback(
     dash.dependencies.Output("h1", "children"),
-    [dash.dependencies.Input("button-out", "children")],
+    [dash.dependencies.Input("button-out", "children")], value=None
 )
-def color_picker(color):
-    return "Please pick this color: {}".format(session.get("COLOR"))
-
-
-@app.callback(
-    dash.dependencies.Output("color-picker", "value"),
-    [dash.dependencies.Input("button-out", "children")],
-)
-def color_picker(color):
-    return dict(hex=session.get("RAND_COLOR"))
-
+def color_picker(value):
+   return "Please pick this color: {}".format(session.get("COLOR"))
 
 @app.callback(
     dash.dependencies.Output("next", "children"),
@@ -193,7 +197,7 @@ def color_picker(color):
     ],
     [dash.dependencies.State("color-picker", "value")],
 )
-def entry_to_db(submit_entry, skip, color):
+def entry_to_db(submit_entry, skip, color={"hex": RANDOM_HEX}):
     hexcolor = color["hex"]
     if submit_entry:
         time_stamp = dt.datetime.now()
@@ -237,12 +241,16 @@ def entry_to_db(submit_entry, skip, color):
         hexcolor = color["hex"]
         return hexcolor
 
-    raise dash.exceptions.PreventUpdate
+    #raise dash.exceptions.PreventUpdate
 
 
 @app.callback(
     dash.dependencies.Output("main", "style"),
-    [dash.dependencies.Input("color-picker", "value")],
+    [dash.dependencies.Input("color-picker", "value")]
 )
 def update_output(value):
     return {"color": value["hex"]}
+
+app.layout = layout
+
+
