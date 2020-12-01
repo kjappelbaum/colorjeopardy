@@ -22,7 +22,7 @@ if DATABASE_URL == "sqlite:////tmp/test.db":
     )
 else: 
     disk_engine = db.create_engine(
-        DATABASE_URL, connect_args={'check_same_thread': False}
+        DATABASE_URL
     )
 
 
